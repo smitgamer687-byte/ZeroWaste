@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Surplus Dashboard</title>
+    <style>
+body {
+    font-family: Arial;
+    background-color: #f4f6f9;
+    padding: 40px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+}
+
+button {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.collect-btn {
+    background-color: #27ae60;
+    color: white;
+}
+
+.stats-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.stat-card h4 {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.stat-card p {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #27ae60;
+}
+
+</style>
+
+</head>
+<body>
+
+<h2>📦 Surplus Dashboard</h2>
+
+<h3>Welcome {{ ngo_name }}</h3>
+<h4>Remaining Capacity: {{ capacity }}</h4>
+
+<a href="/logout">Logout</a>
+<br><br>
+
+<hr>
+
+<h3>📊 System Statistics</h3>
+
+<div class="stats-container">
+
+    <div class="stat-card">
+        <h4>Total Surplus</h4>
+        <p>{{ total_surplus }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Collected</h4>
+        <p>{{ total_collected }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Currently Assigned</h4>
+        <p>{{ total_assigned }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h4>Your Capacity</h4>
+        <p>{{ capacity }}</p>
+    </div>
+
+</div>
+
+<h4>Capacity Utilization</h4>
+
+<div class="progress-bar">
+    <div class="progress-fill" style="width: {{ used_percentage }}%;"></div>
+</div>
+
+<form method="POST" action="/update_capacity">
+    <input type="number" name="capacity" placeholder="Update Capacity" required>
+    <button type="submit">Update</button>
+</form>
+
+<hr>
+
+<div class="card">
+    <strong>Total Surplus Created:</strong> {{ total_surplus }} <br>
+    <strong>Total Collected:</strong> {{ total_collected }} <br>
+    <strong>Currently Assigned:</strong> {{ total_assigned }} <br>
+    <strong>Your Remaining Capacity:</strong> {{ capacity }}
+</div>
+
+<hr>
+
+{% for row in records %}
+    <div class="card">
+        <strong>Surplus ID:</strong> {{ row[0] }} <br>
+        <strong>NGO:</strong> {{ row[1] }} <br>
+        <strong>Food:</strong> {{ row[2] }} <br>
+        <strong>Quantity:</strong> {{ row[3] }} <br>
+        <strong>Expiry:</strong> {{ row[4] }} hours <br>
+        <strong>Distance:</strong> {{ "%.2f"|format(row[5]) }} KM <br>
+        <strong>Status:</strong> {{ row[6] }} <br><br>
+
+        {% if row[6] == "Assigned" %}
+            <a href="/collect/{{ row[0] }}">
+                <button class="collect-btn">✅ Mark as Collected</button>
+            </a>
+        {% endif %}
+    </div>
+{% endfor %}
+
+</body>
+</html>

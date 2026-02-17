@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register NGO</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(to right, #43cea2, #185a9d); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .reg-card { background: white; width: 380px; padding: 30px; border-radius: 15px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
+        button { width: 100%; padding: 14px; margin-top: 15px; border: none; background-color: #27ae60; color: white; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="reg-card">
+    <h2 style="color: #185a9d;">🏢 NGO Signup</h2>
+    <form method="POST">
+        <input type="text" name="name" placeholder="NGO Name" required>
+        <input type="password" name="password" placeholder="Create Password" required>
+        <input type="number" step="any" name="latitude" placeholder="Latitude" required>
+        <input type="number" step="any" name="longitude" placeholder="Longitude" required>
+        <input type="number" name="capacity" placeholder="Food Capacity (Units)" required>
+        <button type="submit">Register NGO</button>
+    </form>
+    <br><a href="/login" style="color: #888; text-decoration: none; font-size: 13px;">Back to Login</a>
+</div>
+</body>
+</html>
